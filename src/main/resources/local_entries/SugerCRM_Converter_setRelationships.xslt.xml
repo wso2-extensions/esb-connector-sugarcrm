@@ -1,0 +1,80 @@
+<!--
+ ~  Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ ~
+ ~  WSO2 Inc. licenses this file to you under the Apache License,
+ ~  Version 2.0 (the "License"); you may not use this file except
+ ~  in compliance with the License.
+ ~  You may obtain a copy of the License at
+ ~
+ ~    http://www.apache.org/licenses/LICENSE-2.0
+ ~
+ ~  Unless required by applicable law or agreed to in writing,
+ ~  software distributed under the License is distributed on an
+ ~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ ~  KIND, either express or implied.  See the License for the
+ ~  specific language governing permissions and limitations
+ ~  under the License.
+-->
+<localEntry xmlns="http://ws.apache.org/ns/synapse" key="SugerCRM_Converter_setRelationships.xslt">
+    <xsl:stylesheet version="2.0"
+                    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                    xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                    xmlns:sug="wso2.connector.sugarcrm.setrelationships">
+
+        <xsl:template match="@*|node()"
+                      xmlns:sug="wso2.connector.sugarcrm.setrelationships">
+            <xsl:copy>
+                <xsl:apply-templates select="@*|node()"/>
+                <xsl:if test="soapenv:Envelope/soapenv:Body/sug:relationshipLists">
+                    <xsl:apply-templates select="sug:relationshipLists"/>
+                </xsl:if>
+            </xsl:copy>
+        </xsl:template>
+
+        <xsl:template match="sug:relationshipLists">
+            <xsl:element name="sug:set_relationship_list"
+                         xmlns:sug="http://www.sugarcrm.com/sugarcrm"
+                         xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                         xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/">
+                <xsl:attribute name="soapenc:arrayType">sug:set_relationship_value[1]
+                </xsl:attribute>
+                <xsl:apply-templates select="setRelationshipValue"/>
+            </xsl:element>
+        </xsl:template>
+
+        <xsl:template match="setRelationshipValue">
+            <xsl:element name="set_relationship_value">
+                <xsl:apply-templates select="module1"/>
+                <xsl:apply-templates select="module1Id"/>
+                <xsl:apply-templates select="module2"/>
+                <xsl:apply-templates select="module2Id"/>
+            </xsl:element>
+        </xsl:template>
+
+        <xsl:template match="module1Id">
+            <xsl:element name="module1_id">
+                <xsl:value-of select="."/>
+            </xsl:element>
+        </xsl:template>
+
+        <xsl:template match="module2Id">
+            <xsl:element name="module2_id">
+                <xsl:value-of select="."/>
+            </xsl:element>
+        </xsl:template>
+
+        <xsl:template match="module1">
+            <xsl:element name="module1">
+                <xsl:value-of select="."/>
+            </xsl:element>
+        </xsl:template>
+
+        <xsl:template match="module2">
+            <xsl:element name="module2">
+                <xsl:value-of select="."/>
+            </xsl:element>
+        </xsl:template>
+
+    </xsl:stylesheet>
+    <description/>
+</localEntry>
