@@ -1,0 +1,48 @@
+Product: WSO2 ESB Connector for SugarCRM + Integration Tests
+
+Pre-requisites:
+
+	- Maven 3.x
+	- Java 1.6 or above
+	- The org.wso2.esb.integration.integration-base project is required and It will be found in https://github.com/wso2-extensions/esb-integration-base.
+
+Tested Platform: 
+
+	- Microsoft WINDOWS V-7
+	- Ubuntu 13.04
+	- WSO2 ESB 4.9.0
+		  
+STEPS:
+
+	1. To build the connector without running tests from any location, run maven build with the -Dmaven.test.skip=true switch.
+
+	2. Make sure the ESB 4.9.0 zip available at "{<SUGARCRM_HOME>/repository/"}
+
+	3. Make sure the SugarCRM test suite is enabled (as given below) and all other test suites are commented in the following file - "{SUGARCRM_HOME}/src/test/resources/testng.xml"
+		<test name="SugarCRM-Connector-Test" preserve-order="true" verbose="2">
+			<packages>
+				<package name="org.wso2.carbon.connector.integration.test.sugarcrm"/>
+			</packages>
+		</test>
+
+	4. Obtain a trial sugarCRM account if the given trial account is expired, by using the following steps.
+			
+		i) Login to https://www.sugarcrm.com.
+
+			When creating a trial login, select the deployment region as 'North America' as the integration test results are compared against the pre-defined dataset of that region.
+			In case if you need to support for 'Europe' deployment region, you need to modify the request parameters as per the pre-defined dataset of that region. (e.g. Module Ids)
+			
+			Note: This account is subjected to expire within 7 days. At the event of expiration the user needs to re-register for another trial account.
+
+		ii) In order to change the default password of the admin, follow the steps below:
+			a) Select admin profile (e.g. The admin controls all aspects of Sugar) from the dashboard of the trial account
+			b) Select profile option from the top right corner of the screen
+			c) Click on 'Edit' and  then select 'Password' tab 
+			d) Set Current password, New password and Confirm Password
+			e) Click on Save
+			
+		iii) Convert your password (which was set in above step) to MD5 hash code and change appUri, userName and password (MD5 hash code) appropriately on file at 
+			 "{SUGARCRM_HOME}/src/test/resources/artifacts/ESB/connector/config/sugarcrm.properties" and copy the file to location "Integration_Test/products/esb/4.8.1/modules/integration/connectors/src/test/resources/artifacts/ESB/connector/config/".
+
+    5. Navigate to "{SUGARCRM_HOME}" and run the following command.
+                $ mvn clean install
