@@ -49,7 +49,7 @@ public class SugarCRMConnectorIntegrationTest extends ESBIntegrationTest {
     private ProxyServiceAdminClient proxyAdmin;
     private String repoLocation = null;
     private String fileURLSeperator = null;
-    private String sugarCrmConnectorFileName = "sugarcrm-connector-1.0.0.zip";
+    private String sugarCrmConnectorFileName = "sugarcrm-connector-1.0.1-SNAPSHOT.zip";
     private Properties sugarCrmConnectorProperties = null;
 
     @BeforeClass(alwaysRun = true)
