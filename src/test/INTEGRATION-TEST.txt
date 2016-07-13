@@ -8,24 +8,14 @@ Pre-requisites:
 
 Tested Platform: 
 
-	- Microsoft WINDOWS V-7
-	- Ubuntu 13.04
-	- WSO2 ESB 4.9.0
+	- Mac OSx 10.9
+	- WSO2 ESB 5.0.0-SNAPSHOT
 		  
 STEPS:
 
-	1. To build the connector without running tests from any location, run maven build with the -Dmaven.test.skip=true switch.
+	1. Download ESB 5.0.0-SNAPSHOT from official website. Extract the ESB and put "-XX:-UseSplitVerifier" under $JVM_MEM_OPTS into {ESB_HOME}/bin/wso2server.sh.
 
-	2. Make sure the ESB 4.9.0 zip available at "{<SUGARCRM_HOME>/repository/"}
-
-	3. Make sure the SugarCRM test suite is enabled (as given below) and all other test suites are commented in the following file - "{SUGARCRM_HOME}/src/test/resources/testng.xml"
-		<test name="SugarCRM-Connector-Test" preserve-order="true" verbose="2">
-			<packages>
-				<package name="org.wso2.carbon.connector.integration.test.sugarcrm"/>
-			</packages>
-		</test>
-
-	4. Obtain a trial sugarCRM account if the given trial account is expired, by using the following steps.
+	2. Obtain a trial sugarCRM account if the given trial account is expired, by using the following steps.
 			
 		i) Login to https://www.sugarcrm.com.
 
@@ -44,5 +34,5 @@ STEPS:
 		iii) Convert your password (which was set in above step) to MD5 hash code and change appUri, userName and password (MD5 hash code) appropriately on file at 
 			 "{SUGARCRM_HOME}/src/test/resources/artifacts/ESB/connector/config/sugarcrm.properties" and copy the file to location "Integration_Test/products/esb/4.8.1/modules/integration/connectors/src/test/resources/artifacts/ESB/connector/config/".
 
-    5. Navigate to "{SUGARCRM_HOME}" and run the following command.
+    3. Navigate to "{SUGARCRM_HOME}" and run the following command.
                 $ mvn clean install
